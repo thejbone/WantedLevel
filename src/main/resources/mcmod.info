@@ -1,7 +1,7 @@
   [
   {
-    "modid": "customnpcex",
-    "name": "CustomNPCEx",
+    "modid": "wantedlevel",
+    "name": "WantedLevel",
     "description": "",
     "version": "${version}",
     "mcversion": "${mcversion}",
