@@ -21,12 +21,12 @@ public class CommonProxy
 {
     public void preInit()
     {
+        MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
     }
 
     public void init()
     {
         CapabilityManager.INSTANCE.register(IWanted.class, new WantedStorage(), Wanted.class);
-        MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
@@ -52,20 +52,4 @@ public class CommonProxy
         return null;
     }
 
-
-    @SubscribeEvent
-    public void onEntityKilled(AttackEntityEvent event){
-        IWanted wanted = event.getEntityPlayer().getCapability(WantedProvider.WANTED_CAP, null);
-        wanted.add(1);
-        event.getEntityPlayer().sendMessage(new TextComponentString("You got an extra star!"));
-    }
-
-    @SubscribeEvent
-    public void onBlockPlace(BlockEvent.EntityPlaceEvent event){
-        if(event.getEntity() instanceof EntityPlayer){
-            IWanted wanted = event.getEntity().getCapability(WantedProvider.WANTED_CAP, null);
-            wanted.remove(1);
-            event.getEntity().sendMessage(new TextComponentString("You got a star removed!"));
-        }
-    }
 }

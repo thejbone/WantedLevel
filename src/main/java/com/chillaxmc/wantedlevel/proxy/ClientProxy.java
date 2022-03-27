@@ -14,16 +14,17 @@ public class ClientProxy extends CommonProxy
 
     public void preInit()
     {
-
+        super.preInit();
     }
 
     public void init()
     {
-
+        super.init();
     }
 
     public void postInit()
     {
+        super.postInit();
         wantedOverlay = new WantedOverlay(Minecraft.getMinecraft());
         MinecraftForge.EVENT_BUS.register(wantedOverlay);
         MinecraftForge.EVENT_BUS.register(this);
@@ -33,7 +34,7 @@ public class ClientProxy extends CommonProxy
 
     public void loadComplete()
     {
-
+        super.loadComplete();
     }
 
     @Nullable
