@@ -14,11 +14,14 @@ public class WantedStorage implements Capability.IStorage<IWanted> {
     @Nullable
     @Override
     public NBTBase writeNBT(Capability capability, IWanted instance, EnumFacing side) {
+        System.out.println("Writing wanted " + instance.getWanted());
         return new NBTTagInt(instance.getWanted());
     }
 
     @Override
     public void readNBT(Capability capability, IWanted instance, EnumFacing side, NBTBase nbt) {
-        instance.set(((NBTPrimitive) nbt).getInt());
+        int thevalue = ((NBTPrimitive) nbt).getInt();
+        System.out.println("Reading wanted " + thevalue);
+        instance.set(thevalue);
     }
 }

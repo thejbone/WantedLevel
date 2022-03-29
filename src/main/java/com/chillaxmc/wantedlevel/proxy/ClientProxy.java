@@ -1,20 +1,25 @@
 package com.chillaxmc.wantedlevel.proxy;
 
-import com.chillaxmc.wantedlevel.client.gui.WantedOverlay;
+import com.chillaxmc.wantedlevel.WLPacketHandler;
+import com.chillaxmc.wantedlevel.gui.WantedOverlay;
+import com.chillaxmc.wantedlevel.messages.WLMessage;
+import com.chillaxmc.wantedlevel.messages.WLMessageHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nullable;
 
 public class ClientProxy extends CommonProxy
 {
 
-    WantedOverlay wantedOverlay;
+    public WantedOverlay wantedOverlay;
 
     public void preInit()
     {
         super.preInit();
+        WLPacketHandler.INSTANCE.registerMessage(WLMessageHandler.class, WLMessage.class, 1, Side.CLIENT);
     }
 
     public void init()

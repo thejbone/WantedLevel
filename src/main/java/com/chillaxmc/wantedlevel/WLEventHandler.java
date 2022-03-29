@@ -2,14 +2,18 @@ package com.chillaxmc.wantedlevel;
 
 import com.chillaxmc.wantedlevel.capability.IWanted;
 import com.chillaxmc.wantedlevel.capability.WantedProvider;
+import com.chillaxmc.wantedlevel.messages.WLMessage;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
-public class EventHandler {
+public class WLEventHandler {
 
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event)
@@ -28,22 +32,19 @@ public class EventHandler {
         }
     }
 
-
-
     @SubscribeEvent
-    public void onEntityKilled(AttackEntityEvent event){
-        IWanted wanted = event.getEntityPlayer().getCapability(WantedProvider.WANTED_CAP, null);
-        wanted.add(1);
-        event.getEntityPlayer().sendMessage(new TextComponentString("You got an extra star!"));
-    }
-
-    @SubscribeEvent
-    public void onBlockPlace(BlockEvent.EntityPlaceEvent event){
-        if(event.getEntity() instanceof EntityPlayer){
-            IWanted wanted = event.getEntity().getCapability(WantedProvider.WANTED_CAP, null);
-            wanted.remove(1);
-            event.getEntity().sendMessage(new TextComponentString("You got a star removed!"));
+    public void onPlayerJoin(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event){
+        EntityPlayer player = event.player;
+        IWanted playerWanted = player.getCapability(WantedProvider.WANTED_CAP, null);
+        IMessage iMessage;
+        if(playerWanted != null){
+            iMessage = new WLMessage(playerWanted.getWanted());
+            playerWanted.set(playerWanted.getWanted());
+        } else {
+            iMessage = new WLMessage(0);
         }
+        WLPacketHandler.INSTANCE.sendTo(iMessage, (EntityPlayerMP) player);
     }
+
 
 }

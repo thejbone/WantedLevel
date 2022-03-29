@@ -2,6 +2,8 @@ package com.chillaxmc.wantedlevel;
 
 import com.chillaxmc.wantedlevel.capability.IWanted;
 import com.chillaxmc.wantedlevel.capability.WantedProvider;
+import com.chillaxmc.wantedlevel.commands.AddWanted;
+import com.chillaxmc.wantedlevel.commands.GetWanted;
 import com.chillaxmc.wantedlevel.proxy.CommonProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;
@@ -12,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(
@@ -53,6 +56,12 @@ public class WantedLevel {
     @Mod.EventHandler
     public void postinit(FMLPostInitializationEvent event) {
         proxy.postInit();
+    }
+
+    @Mod.EventHandler
+    public void serverInit(FMLServerStartingEvent event){
+        event.registerServerCommand(new AddWanted());
+        event.registerServerCommand(new GetWanted());
     }
 
 }

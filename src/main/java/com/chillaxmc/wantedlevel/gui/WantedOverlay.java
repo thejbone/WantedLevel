@@ -1,11 +1,10 @@
-package com.chillaxmc.wantedlevel.client.gui;
+package com.chillaxmc.wantedlevel.gui;
 
 import com.chillaxmc.wantedlevel.Reference;
 import com.chillaxmc.wantedlevel.capability.IWanted;
 import com.chillaxmc.wantedlevel.capability.WantedProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,10 +24,6 @@ public class WantedOverlay extends Gui {
 
     public int getStarCount() {
         return starCount;
-    }
-
-    public void setStarCount(int starCount) {
-        this.starCount = starCount;
     }
 
     @SubscribeEvent
